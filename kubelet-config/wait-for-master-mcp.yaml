@@ -1,0 +1,13 @@
+- op: replace
+  path: /metadata/name
+  value: "wait-for-master-mcp"
+
+- op: add
+  path: /metadata/annotations
+  value: 
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+
+- op: replace
+  path: /spec/template/spec/containers/0/env/1/value
+  value: master

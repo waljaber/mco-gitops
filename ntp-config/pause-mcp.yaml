@@ -1,0 +1,13 @@
+- op: replace
+  path: /spec/template/spec/containers/0/command/2
+  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":true}}' machineconfigpool/worker"
+
+- op: replace
+  path: /metadata/name
+  value: "pause-worker-mcp"
+
+- op: add
+  path: /metadata/annotations
+  value: 
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded

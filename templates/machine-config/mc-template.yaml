@@ -1,0 +1,28 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role:
+  name: mc-template
+spec:
+  config:
+    storage:
+      files:
+      - path: 
+        contents:
+          source: 
+        user:
+          name: 
+        group:
+          name: 
+        mode: 
+        overwrite: true
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 3.2.0
+    networkd: {}
+    passwd: {}
+  osImageURL: ""

@@ -1,0 +1,42 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: set-eviction-rules
+  annotations:
+    argocd.argoproj.io/sync-wave: '0' 
+    argocd.argoproj.io/hook: Sync
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      custom-kubelet: large-pods 
+  kubeletConfig:
+    evictionSoft: 
+      memory.available: "1Gi"
+      nodefs.available: "15%"
+      nodefs.inodesFree: "10%"
+      imagefs.available: "15%"
+      imagefs.inodesFree: "10%"
+    evictionSoftGracePeriod:  
+      memory.available: "3m"
+      nodefs.available: "3m"
+      nodefs.inodesFree: "3m"
+      imagefs.available: "3m"
+      imagefs.inodesFree: "3m"
+    evictionHard:
+      memory.available: "500Mi"
+      nodefs.available: "10%"
+      nodefs.inodesFree: "5%"
+      imagefs.available: "10%"
+      imagefs.inodesFree: "5%"
+    evictionPressureTransitionPeriod: 300s
+    imageMinimumGCAge: 5m 
+    imageGCHighThresholdPercent: 80 
+    imageGCLowThresholdPercent: 50
+    kubeReserved:
+      cpu: 500m
+      memory: 2048Mi
+    maxPods: 250
+    podsPerCore: 0
+    systemReserved:
+      cpu: 500m
+      memory: 2048Mi

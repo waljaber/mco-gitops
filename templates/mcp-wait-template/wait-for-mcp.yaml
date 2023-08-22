@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: gitops-operations
+  name: patch-mcp-name
+spec:
+  template:
+    spec:
+      containers:
+        - image: registry.redhat.io/openshift4/ose-cli:v4.12
+          name: mcp-wait-job
+          command:
+            - /bin/bash
+            - -c
+            - |-
+              sleep 40
+              for pool in $MCP
+              do
+                echo "Waiting for $pool MCP to update "
+                echo ""
+                until oc wait --for condition=updated --timeout=60s mcp $pool
+                do
+                  echo "...still waiting for $pool to update "
+                  echo ""
+                done
+              done
+              echo "DONE"
+          env:
+          - name: HOME
+            value: "/tmp/mcp"
+          - name: MCP
+            value: PATCH ME
+      dnsPolicy: ClusterFirst
+      serviceAccount: cli-job-sa
+      serviceAccountName: cli-job-sa
+      terminationGracePeriodSeconds: 30
+      restartPolicy: OnFailure
+  backoffLimit: 10
+  completions: 4
