@@ -6,7 +6,6 @@
   path: /metadata/annotations
   value: 
     argocd.argoproj.io/sync-wave: '0'
-    argocd.argoproj.io/hook: Sync
 
 - op: replace
   path: "/metadata/name"
