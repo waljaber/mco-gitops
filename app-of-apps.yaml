@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+spec:
+  destination:
+    name: ''
+    namespace: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: argocd
+    repoURL: 'https://github.com/waljaber/mco-gitops.git'
+    targetRevision: HEAD
+  project: cluster-config
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

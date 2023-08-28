@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ntp-config
+  annotations:
+    argocd.argoproj.io/sync-wave: '1'
+spec:
+  destination:
+    name: ''
+    namespace: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ntp-config
+    repoURL: 'https://github.com/waljaber/mco-gitops'
+    targetRevision: HEAD
+  project: cluster-config
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
