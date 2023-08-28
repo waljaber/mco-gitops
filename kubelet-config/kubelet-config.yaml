@@ -4,7 +4,6 @@ metadata:
   name: set-eviction-rules
   annotations:
     argocd.argoproj.io/sync-wave: '0' 
-    argocd.argoproj.io/hook: Sync
 spec:
   machineConfigPoolSelector:
     matchLabels:

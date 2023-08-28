@@ -1,32 +1,30 @@
-- op: replace
-  path: "/metadata/labels/machineconfiguration.openshift.io~1role"
-  value: master
-
-- op: add
-  path: /metadata/annotations
-  value: 
-    argocd.argoproj.io/sync-wave: '0'
-
-- op: replace
-  path: "/metadata/name"
-  value: 99-master-chrony-conf
-
-- op: replace
-  path: /spec/config/storage/files/0/path
-  value: "/etc/chrony.conf"
-
-- op: replace
-  path: /spec/config/storage/files/0/contents/source
-  value: "data:text/plain;charset=utf-8;base64,c2VydmVyIDAucG9vbC5udHAub3JnIGlidXJzdApzZXJ2ZXIgMS5wb29sLm50cC5vcmcgaWJ1cnN0CnNlcnZlciAyLnBvb2wubnRwLm9yZyBpYnVyc3QKc2VydmVyIDMucG9vbC5udHAub3JnIGlidXJzdApzdHJhdHVtd2VpZ2h0IDAKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdApydGNzeW5jCm1ha2VzdGVwIDEwIDMKYmluZGNtZGFkZHJlc3MgMTI3LjAuMC4xCmJpbmRjbWRhZGRyZXNzIDo6MQprZXlmaWxlIC9ldGMvY2hyb255LmtleXMKY29tbWFuZGtleSAxCmdlbmVyYXRlY29tbWFuZGtleQpub2NsaWVudGxvZwpsb2djaGFuZ2UgMC41CmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK"
-
-- op: replace
-  path: /spec/config/storage/files/0/user/name
-  value: root
-
-- op: replace
-  path: /spec/config/storage/files/0/group/name
-  value: root
-
-- op: replace
-  path: /spec/config/storage/files/0/mode
-  value: 420
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-chrony-conf
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 3.2.0
+    networkd: {}
+    passwd: {}
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,c2VydmVyIDAucG9vbC5udHAub3JnIGlidXJzdApzZXJ2ZXIgMS5wb29sLm50cC5vcmcgaWJ1cnN0CnNlcnZlciAyLnBvb2wubnRwLm9yZyBpYnVyc3QKc2VydmVyIDMucG9vbC5udHAub3JnIGlidXJzdApzdHJhdHVtd2VpZ2h0IDAKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdApydGNzeW5jCm1ha2VzdGVwIDEwIDMKYmluZGNtZGFkZHJlc3MgMTI3LjAuMC4xCmJpbmRjbWRhZGRyZXNzIDo6MQprZXlmaWxlIC9ldGMvY2hyb255LmtleXMKY29tbWFuZGtleSAxCmdlbmVyYXRlY29tbWFuZGtleQpub2NsaWVudGxvZwpsb2djaGFuZ2UgMC41CmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK
+        group:
+          name: root
+        mode: 420
+        overwrite: true
+        path: /etc/chrony.conf
+        user:
+          name: root
+  osImageURL: ""

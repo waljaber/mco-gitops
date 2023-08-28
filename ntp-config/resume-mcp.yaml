@@ -1,12 +1,24 @@
-- op: replace
-  path: /spec/template/spec/containers/0/command/2
-  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":false}}' machineconfigpool/master"
-
-- op: replace
-  path: /metadata/name
-  value: "resume-master-mcp"
-
-- op: add
-  path: /metadata/annotations
-  value: 
-    argocd.argoproj.io/sync-wave: '1'
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: resume-master-mcp
+  namespace: gitops-operations
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+      - command:
+        - /bin/bash
+        - -c
+        - oc patch --type=merge --patch='{"spec":{"paused":false}}' machineconfigpool/master
+        env:
+        - name: HOME
+          value: /tmp/cli-patch
+        image: registry.redhat.io/openshift4/ose-cli:v4.12
+        name: patch-cli
+      restartPolicy: Never
+      serviceAccount: cli-job-sa
+      serviceAccountName: cli-job-sa
