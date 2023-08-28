@@ -1,10 +1,10 @@
 - op: replace
   path: /spec/template/spec/containers/0/command/2
-  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":false}}' machineconfigpool/worker"
+  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":false}}' machineconfigpool/master"
 
 - op: replace
   path: /metadata/name
-  value: "resume-worker-mcp"
+  value: "resume-master-mcp"
 
 - op: add
   path: /metadata/annotations

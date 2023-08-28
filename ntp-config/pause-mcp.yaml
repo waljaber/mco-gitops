@@ -1,10 +1,10 @@
 - op: replace
   path: /spec/template/spec/containers/0/command/2
-  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":true}}' machineconfigpool/worker"
+  value: "oc patch --type=merge --patch='{\"spec\":{\"paused\":true}}' machineconfigpool/master"
 
 - op: replace
   path: /metadata/name
-  value: "pause-worker-mcp"
+  value: "pause-master-mcp"
 
 - op: add
   path: /metadata/annotations
